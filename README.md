@@ -81,7 +81,7 @@ Special thanks to all contributors who have helped shape this project.
 
 | Contributor Name | Role |
 |------------------|------|
-| Your Name        | Developer |
+| Yaswanth Sai        | Developer |
 
 ## 📫 Contribute
 To contribute to this project, follow these steps:
