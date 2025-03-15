@@ -48,10 +48,9 @@ DYNAMIC_PROJECT/
 │ ├── task13/
 │ │ ├── brand_logo.png
 │ │ ├── index.html
-│── assets/ # Images & static assets
 │ ├── dynamic.jpeg
+│ ├── landing.html
 │── index.html # Main entry file
-│── landing.html # Landing page
 │── script.js # JavaScript logic for dynamic UI
 │── styles.css # Global styles
 │── README.md # Project documentation
