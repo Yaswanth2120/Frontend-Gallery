@@ -1,5 +1,5 @@
 # Dynamic Front-End Lab
-==========================
+
 
 A dynamic front-end learning lab designed to serve as an interactive space for various front-end development exercises and projects. This lab covers multiple tasks focusing on HTML, CSS, JavaScript, Bootstrap, and more, allowing users to explore both fundamental and advanced front-end concepts.
 
