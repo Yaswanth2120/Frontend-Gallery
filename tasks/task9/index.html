@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Information</title>
+    <title>Student Information System</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <style>
         :root {
@@ -15,11 +15,9 @@
             --text-secondary: #6e6e73;
             --border: #d2d2d7;
             --success: #34c759;
-            --warning: #ff9f0a;
             --danger: #ff3b30;
-            --radius: 12px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s ease;
+            --radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -33,88 +31,52 @@
             background-color: var(--background);
             color: var(--text);
             line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             padding: 2rem 1rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        .page-header {
+        .header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        h2 {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text);
+            margin-bottom: 0.5rem;
         }
 
         .subtitle {
-            font-size: 1.1rem;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
         }
 
-        /* Bento Grid Layout */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .bento-card {
+        .card {
             background-color: var(--card-bg);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             padding: 1.5rem;
-            transition: var(--transition);
-            overflow: hidden;
-        }
-
-        .bento-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .bento-card.span-2 {
-            grid-column: span 2;
-        }
-
-        .card-header {
             margin-bottom: 1.5rem;
         }
 
         .card-title {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text);
+            margin-bottom: 1rem;
         }
 
-        /* Form Styling */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         label {
@@ -127,47 +89,29 @@
 
         input {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 0.75rem;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--card-bg);
-            color: var(--text);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
         }
 
         input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
         }
 
-        input::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.6;
-        }
-
-        /* Button Styling */
         .button-group {
             display: flex;
-            flex-wrap: wrap;
             gap: 0.75rem;
-            margin-top: 1.5rem;
         }
 
         button {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
             font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
             border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            min-width: 120px;
         }
 
         .btn-primary {
@@ -180,138 +124,70 @@
         }
 
         .btn-secondary {
-            background-color: rgba(0, 113, 227, 0.1);
-            color: var(--primary);
+            background-color: #f5f5f7;
+            color: var(--text);
         }
 
         .btn-secondary:hover {
-            background-color: rgba(0, 113, 227, 0.15);
+            background-color: #e5e5ea;
         }
 
         .btn-danger {
-            background-color: rgba(255, 59, 48, 0.1);
-            color: var(--danger);
+            background-color: var(--danger);
+            color: white;
         }
 
-        .btn-danger:hover {
-            background-color: rgba(255, 59, 48, 0.15);
-        }
-
-        .btn-warning {
-            background-color: rgba(255, 159, 10, 0.1);
-            color: var(--warning);
-        }
-
-        .btn-warning:hover {
-            background-color: rgba(255, 159, 10, 0.15);
-        }
-
-        /* Search Box Styling */
         .search-container {
             display: flex;
             gap: 0.75rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .search-container input {
             flex: 1;
         }
 
-        /* Table Styling */
-        .table-container {
-            overflow-x: auto;
-            border-radius: var(--radius);
-            background-color: var(--card-bg);
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.95rem;
         }
 
         th {
-            background-color: rgba(0, 113, 227, 0.05);
-            color: var(--text);
+            background-color: #f5f5f7;
+            padding: 0.75rem;
             font-weight: 600;
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 10;
         }
 
         td {
-            padding: 1rem;
+            padding: 0.75rem;
             border-top: 1px solid var(--border);
-            color: var(--text);
         }
 
-        tr:hover td {
-            background-color: rgba(0, 113, 227, 0.03);
+        .action-btn {
+            padding: 0.4rem 0.6rem;
+            margin-right: 0.25rem;
+            font-size: 0.8rem;
         }
 
-        /* Empty State */
         .empty-state {
-            padding: 3rem 1rem;
+            padding: 2rem;
             text-align: center;
             color: var(--text-secondary);
         }
 
-        .empty-state p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .bento-card.span-2 {
-                grid-column: span 1;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-        }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease forwards;
-        }
-
-        /* Notification */
         .notification {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.25rem;
             background-color: var(--success);
             color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
-            z-index: 1000;
         }
 
         .notification.show {
@@ -322,80 +198,82 @@
         .notification.error {
             background-color: var(--danger);
         }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="page-header">
+        <header class="header">
             <h1>Student Information System</h1>
-            <p class="subtitle">Manage and track student records with this elegant interface</p>
+            <p class="subtitle">Manage student records easily</p>
         </header>
 
-        <div class="bento-grid">
-            <!-- Student Form Card -->
-            <div class="bento-card span-2">
-                <div class="card-header">
-                    <h2 class="card-title">Add New Student</h2>
+        <!-- Student Form Card -->
+        <div class="card">
+            <h2 class="card-title" id="form_title">Add New Student</h2>
+            <div class="form-grid">
+                <input type="hidden" id="edit_id">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter student name">
                 </div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" placeholder="Enter student name">
-                    </div>
-                    <div class="form-group">
-                        <label for="profession">Profession</label>
-                        <input type="text" id="profession" placeholder="Enter profession">
-                    </div>
-                    <div class="form-group">
-                        <label for="degree">Degree</label>
-                        <input type="text" id="degree" placeholder="Enter degree">
-                    </div>
-                    <div class="form-group">
-                        <label for="field">Field of Study</label>
-                        <input type="text" id="field" placeholder="Enter field of study">
-                    </div>
-                    <div class="form-group">
-                        <label for="university">University</label>
-                        <input type="text" id="university" placeholder="Enter university">
-                    </div>
-                    <div class="form-group">
-                        <label for="studentID">Student ID</label>
-                        <input type="text" id="studentID" placeholder="Enter student ID">
-                    </div>
+                <div class="form-group">
+                    <label for="profession">Profession</label>
+                    <input type="text" id="profession" placeholder="Enter profession">
                 </div>
-                <div class="button-group">
-                    <button class="btn-primary" onclick="addStudentInfo()">Add Student</button>
-                    <button class="btn-warning" onclick="clearInputFields()">Clear Form</button>
+                <div class="form-group">
+                    <label for="degree">Degree</label>
+                    <input type="text" id="degree" placeholder="Enter degree">
+                </div>
+                <div class="form-group">
+                    <label for="field">Field of Study</label>
+                    <input type="text" id="field" placeholder="Enter field of study">
+                </div>
+                <div class="form-group">
+                    <label for="university">University</label>
+                    <input type="text" id="university" placeholder="Enter university">
+                </div>
+                <div class="form-group">
+                    <label for="studentID">Student ID</label>
+                    <input type="text" id="studentID" placeholder="Enter student ID">
                 </div>
             </div>
+            <div class="button-group">
+                <button id="submit_btn" class="btn-primary" onclick="saveStudent()">Add Student</button>
+                <button class="btn-secondary" onclick="clearForm()">Clear Form</button>
+            </div>
+        </div>
 
-            <!-- Search Card -->
-            <div class="bento-card">
-                <div class="card-header">
-                    <h2 class="card-title">Search Students</h2>
-                </div>
-                <div class="search-container">
-                    <input type="text" id="search_field" placeholder="Search by any field...">
-                    <button class="btn-primary" onclick="search()">Search</button>
-                </div>
-                <div class="button-group">
-                    <button class="btn-secondary" onclick="displayStudents()">Show All</button>
-                    <button class="btn-danger" onclick="clearOutput()">Clear Results</button>
-                </div>
+        <!-- Search Card -->
+        <div class="card">
+            <h2 class="card-title">Search Students</h2>
+            <div class="search-container">
+                <input type="text" id="search_field" placeholder="Search by any field...">
+                <button class="btn-primary" onclick="searchStudents()">Search</button>
+                <button class="btn-secondary" onclick="showAllStudents()">Show All</button>
             </div>
         </div>
 
         <!-- Results Card -->
-        <div class="bento-card">
-            <div class="card-header">
-                <h2 class="card-title">Student Records</h2>
-            </div>
-            <div class="table-container">
-                <div id="students_list" class="student-records">
-                    <div class="empty-state">
-                        <p>No student records available</p>
-                        <p>Add a new student or search for existing records</p>
-                    </div>
+        <div class="card">
+            <h2 class="card-title">Student Records</h2>
+            <div id="students_list">
+                <div class="empty-state">
+                    <p>No student records available</p>
+                    <p>Add a new student to get started</p>
                 </div>
             </div>
         </div>
@@ -405,10 +283,13 @@
     <div class="notification" id="notification">Student added successfully!</div>
 
     <script>
+        // Store students
         let students = [];
-        const notification = document.getElementById('notification');
-
+        let isEditing = false;
+        
+        // Show notification
         function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
             notification.textContent = message;
             notification.classList.toggle('error', isError);
             notification.classList.add('show');
@@ -417,88 +298,165 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-
-        function addStudentInfo() {
-            let student = {
-                name: document.getElementById("name").value.trim(),
-                profession: document.getElementById("profession").value.trim(),
-                degree: document.getElementById("degree").value.trim(),
-                field: document.getElementById("field").value.trim(),
-                university: document.getElementById("university").value.trim(),
-                studentID: document.getElementById("studentID").value.trim(),
-                description: function() {
-                    return `<tr>
-                        <td>${this.name}</td>
-                        <td>${this.profession}</td>
-                        <td>${this.degree}</td>
-                        <td>${this.field}</td>
-                        <td>${this.university}</td>
-                        <td>${this.studentID}</td>
-                    </tr>`;
-                }
-            };
-
-            if (!student.name || !student.profession || !student.degree || !student.field || !student.university || !student.studentID) {
-                showNotification("All fields are required!", true);
+        
+        // Save student (add or update)
+        function saveStudent() {
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const profession = document.getElementById('profession').value.trim();
+            const degree = document.getElementById('degree').value.trim();
+            const field = document.getElementById('field').value.trim();
+            const university = document.getElementById('university').value.trim();
+            const studentID = document.getElementById('studentID').value.trim();
+            
+            // Validate form
+            if (!name || !profession || !degree || !field || !university || !studentID) {
+                showNotification('All fields are required!', true);
                 return;
             }
-
-            students.push(student);
+            
+            if (isEditing) {
+                // Update existing student
+                const id = document.getElementById('edit_id').value;
+                const index = students.findIndex(s => s.id === id);
+                
+                if (index !== -1) {
+                    students[index] = {
+                        id,
+                        name,
+                        profession,
+                        degree,
+                        field,
+                        university,
+                        studentID
+                    };
+                    showNotification('Student updated successfully!');
+                }
+            } else {
+                // Add new student
+                const newStudent = {
+                    id: Date.now().toString(),
+                    name,
+                    profession,
+                    degree,
+                    field,
+                    university,
+                    studentID
+                };
+                students.push(newStudent);
+                showNotification('Student added successfully!');
+            }
+            
+            // Clear form and display updated list
+            clearForm();
             displayStudents();
-            clearInputFields();
-            showNotification("Student added successfully!");
         }
-
+        
+        // Edit student
+        function editStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+            
+            // Fill form with student data
+            document.getElementById('edit_id').value = student.id;
+            document.getElementById('name').value = student.name;
+            document.getElementById('profession').value = student.profession;
+            document.getElementById('degree').value = student.degree;
+            document.getElementById('field').value = student.field;
+            document.getElementById('university').value = student.university;
+            document.getElementById('studentID').value = student.studentID;
+            
+            // Update UI for edit mode
+            document.getElementById('form_title').textContent = 'Update Student';
+            document.getElementById('submit_btn').textContent = 'Update Student';
+            isEditing = true;
+            
+            // Scroll to form
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Delete student
+        function deleteStudent(id) {
+            const index = students.findIndex(s => s.id === id);
+            if (index !== -1) {
+                students.splice(index, 1);
+                showNotification('Student deleted successfully!');
+                displayStudents();
+            }
+        }
+        
+        // Clear form
+        function clearForm() {
+            document.getElementById('edit_id').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('profession').value = '';
+            document.getElementById('degree').value = '';
+            document.getElementById('field').value = '';
+            document.getElementById('university').value = '';
+            document.getElementById('studentID').value = '';
+            
+            // Reset to add mode
+            document.getElementById('form_title').textContent = 'Add New Student';
+            document.getElementById('submit_btn').textContent = 'Add Student';
+            isEditing = false;
+        }
+        
+        // Display all students
         function displayStudents() {
             if (students.length === 0) {
-                document.getElementById("students_list").innerHTML = `
+                document.getElementById('students_list').innerHTML = `
                     <div class="empty-state">
                         <p>No student records available</p>
-                        <p>Add a new student or search for existing records</p>
+                        <p>Add a new student to get started</p>
                     </div>
                 `;
                 return;
             }
-
-            let output = `<table>
-                            <tr>
-                                <th>Name</th>
-                                <th>Profession</th>
-                                <th>Degree</th>
-                                <th>Field</th>
-                                <th>University</th>
-                                <th>Student ID</th>
-                            </tr>`;
-
-            for (let student of students) {
-                output += student.description();
-            }
-            output += "</table>";
-
-            document.getElementById("students_list").innerHTML = output;
-        }
-
-        function clearInputFields() {
-            document.querySelectorAll("input").forEach(input => input.value = "");
-        }
-
-        function clearOutput() {
-            document.getElementById("students_list").innerHTML = `
-                <div class="empty-state">
-                    <p>Results cleared</p>
-                    <p>Add a new student or search for existing records</p>
-                </div>
+            
+            let output = `
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Profession</th>
+                        <th>Degree</th>
+                        <th>Field</th>
+                        <th>University</th>
+                        <th>Student ID</th>
+                        <th>Actions</th>
+                    </tr>
             `;
+            
+            for (let student of students) {
+                output += `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>${student.profession}</td>
+                        <td>${student.degree}</td>
+                        <td>${student.field}</td>
+                        <td>${student.university}</td>
+                        <td>${student.studentID}</td>
+                        <td>
+                            <button class="btn-primary action-btn" onclick="editStudent('${student.id}')">Edit</button>
+                            <button class="btn-danger action-btn" onclick="deleteStudent('${student.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }
+            
+            output += '</table>';
+            document.getElementById('students_list').innerHTML = output;
         }
-
-        function search() {
-            let keyword = document.getElementById("search_field").value.trim().toLowerCase();
+        
+        // Search students
+        function searchStudents() {
+            const keyword = document.getElementById('search_field').value.trim().toLowerCase();
+            
             if (!keyword) {
-                showNotification("Please enter a keyword to search.", true);
+                showNotification('Please enter a search term', true);
                 return;
             }
-
-            let filteredStudents = students.filter(student =>
+            
+            const results = students.filter(student => 
                 student.name.toLowerCase().includes(keyword) ||
                 student.profession.toLowerCase().includes(keyword) ||
                 student.degree.toLowerCase().includes(keyword) ||
@@ -506,34 +464,65 @@
                 student.university.toLowerCase().includes(keyword) ||
                 student.studentID.toLowerCase().includes(keyword)
             );
-
-            if (filteredStudents.length === 0) {
-                document.getElementById("students_list").innerHTML = `
+            
+            if (results.length === 0) {
+                document.getElementById('students_list').innerHTML = `
                     <div class="empty-state">
-                        <p>No matching student found</p>
+                        <p>No matching results found</p>
                         <p>Try a different search term</p>
                     </div>
                 `;
                 return;
             }
-
-            let output = `<table>
-                            <tr>
-                                <th>Name</th>
-                                <th>Profession</th>
-                                <th>Degree</th>
-                                <th>Field</th>
-                                <th>University</th>
-                                <th>Student ID</th>
-                            </tr>`;
-
-            for (let student of filteredStudents) {
-                output += student.description();
+            
+            let output = `
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Profession</th>
+                        <th>Degree</th>
+                        <th>Field</th>
+                        <th>University</th>
+                        <th>Student ID</th>
+                        <th>Actions</th>
+                    </tr>
+            `;
+            
+            for (let student of results) {
+                output += `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>${student.profession}</td>
+                        <td>${student.degree}</td>
+                        <td>${student.field}</td>
+                        <td>${student.university}</td>
+                        <td>${student.studentID}</td>
+                        <td>
+                            <button class="btn-primary action-btn" onclick="editStudent('${student.id}')">Edit</button>
+                            <button class="btn-danger action-btn" onclick="deleteStudent('${student.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
             }
-            output += "</table>";
-
-            document.getElementById("students_list").innerHTML = output;
+            
+            output += '</table>';
+            document.getElementById('students_list').innerHTML = output;
         }
+        
+        // Show all students
+        function showAllStudents() {
+            document.getElementById('search_field').value = '';
+            displayStudents();
+        }
+        
+        // Add enter key event for search
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search_field').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchStudents();
+                }
+            });
+        });
     </script>
 </body>
 </html>
