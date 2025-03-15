@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <style>
+        :root {
+            --background: #f5f5f7;
+            --text: #1d1d1f;
+            --card-bg: #ffffff;
+            --primary: #0071e3;
+            --border: #d2d2d7;
+            --secondary-text: #6e6e73;
+            --notice-bg: #fff9e5;
+            --notice-text: #b25000;
+        }
+
+        /* Dark Mode Variables */
+        .dark-mode {
+            --background: #1d1d1d;
+            --text: #ffffff;
+            --card-bg: #2c2c2e;
+            --primary: #0a84ff;
+            --border: #38383a;
+            --secondary-text: #a1a1a6;
+            --notice-bg: #3a3000;
+            --notice-text: #ffb340;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            transition: background 0.5s ease, color 0.5s ease;
+            padding: 20px;
+        }
+
+        .page-title {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: var(--secondary-text);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .dark-mode-notice {
+            background-color: var(--notice-bg);
+            color: var(--notice-text);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background: var(--primary);
+            color: white;
+        }
+
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        #result {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: color 0.3s ease;
+        }
+
+        .result-placeholder {
+            color: var(--secondary-text);
+            font-size: 16px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 650px) {
+            .card-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Random Number Generator</h1>
+    <p class="subtitle">Generate random numbers within your specified range</p>
+    <div class="dark-mode-notice" id="darkModeNotice">
+        This page will switch to dark mode in 5 seconds
+    </div>
+
+    <div class="card-container">
+        <!-- Input Card -->
+        <div class="card">
+            <h2 class="card-title">Set Your Range</h2>
+            <input type="number" id="num1" placeholder="Enter Minimum Value">
+            <input type="number" id="num2" placeholder="Enter Maximum Value">
+            <button onclick="generateRandom()">Generate Random Number</button>
+        </div>
+
+        <!-- Result Card -->
+        <div class="card result-card">
+            <h2 class="card-title">Your Result</h2>
+            <div id="result-placeholder" class="result-placeholder">Enter a range and generate a number</div>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Array of colors for the generated number
+        let colors = ["#ff2d55", "#5ac8fa", "#34c759", "#ff9500", "#af52de"];
+        
+        function generateRandom() {
+            let a = parseInt(document.getElementById("num1").value);
+            let b = parseInt(document.getElementById("num2").value);
+            let result = document.getElementById("result");
+            let placeholder = document.getElementById("result-placeholder");
+
+            if (isNaN(a) || isNaN(b)) {
+                result.innerHTML = "Error";
+                result.style.color = "#ff3b30"; // Error color
+                placeholder.innerHTML = "Please enter valid numbers";
+                return;
+            }
+
+            let min = Math.min(a, b);
+            let max = Math.max(a, b);
+            let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            result.innerHTML = randomNum;
+            placeholder.innerHTML = `Random number between ${min} and ${max}:`;
+            
+            // Apply random color from the array
+            let randomColorIndex = Math.floor(Math.random() * colors.length);
+            result.style.color = colors[randomColorIndex];
+        }
+
+        // Switch to dark mode after 5 seconds
+        setTimeout(() => {
+            document.body.classList.add("dark-mode");
+            document.getElementById("darkModeNotice").innerHTML = "Dark mode activated";
+        }, 5000);
+    </script>
+</body>
+</html>

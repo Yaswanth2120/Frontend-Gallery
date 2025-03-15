@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front-End Lab</title>
+    <link rel="icon" type="image/jpeg" href="tasks/dynamic.jpeg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+            Front-End Lab
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Front-End Lab</span>
+            </a>
+            <button class="toggle-btn" id="toggleSidebar" aria-label="Toggle sidebar">
+                <i class="fas fa-chevron-left" id="toggleIcon"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-content">
+            <ul class="sidebar-menu" id="sidebarMenu">
+                <!-- Menu items will be dynamically inserted here -->
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="avatar">YS</div>
+                <div class="user-details">
+                    <div class="user-name">Yaswanth Sai</div>
+                    <div class="user-role">Front-end Developer</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <div class="content-header">
+            <h1 class="page-title" id="pageTitle">Welcome</h1>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="frame-container">
+                <iframe id="projectFrame" title="Project Content"></iframe>
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

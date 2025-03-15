@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Operations</title>
+    <style>
+        :root {
+            --background: #f5f7fa;
+            --surface: #ffffff;
+            --primary: #0071e3;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --border: #e6e6e6;
+            --radius: 12px;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+        }
+
+        input:disabled {
+            background: var(--background);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .operations {
+            display: flex;
+            gap: 8px;
+            margin: 24px 0;
+        }
+
+        .operation-btn {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-primary);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .operation-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .operation-btn:hover:not(.active) {
+            background: var(--background);
+        }
+
+        .output-container {
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: var(--transition);
+            margin-top: 12px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 113, 227, 0.1);
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            right: 8px;
+            top: 0;
+            background: var(--text-primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+                height: 100vh;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .operations {
+                flex-wrap: wrap;
+            }
+            
+            .operation-btn {
+                flex: 1;
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>String Operations</h2>
+            <div class="subtitle">Transform your text with various operations</div>
+        </div>
+        
+        <div class="content">
+            <div class="input-group">
+                <label for="input">Enter your text</label>
+                <input type="text" id="input" placeholder="Type or paste text here" oninput="performOperation()">
+            </div>
+            
+            <div class="operations">
+                <button class="operation-btn active" id="uppercaseBtn" onclick="setOperation('uppercase')">UPPERCASE</button>
+                <button class="operation-btn" id="lowercaseBtn" onclick="setOperation('lowercase')">lowercase</button>
+                <button class="operation-btn" id="capitalizeBtn" onclick="setOperation('capitalize')">Capitalize</button>
+            </div>
+            
+            <div class="input-group output-container">
+                <label for="output">Result</label>
+                <input type="text" id="output" placeholder="Output will appear here" disabled>
+                <button class="copy-btn" id="copyBtn">Copy</button>
+                <div class="copy-tooltip" id="copyTooltip">Copied</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentOperation = 'uppercase';
+        
+        function setOperation(operation) {
+            currentOperation = operation;
+            
+            // Update active button
+            document.querySelectorAll('.operation-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(operation + 'Btn').classList.add('active');
+            
+            // Re-process the input with the new operation
+            performOperation();
+        }
+        
+        function performOperation() {
+            let inputText = document.getElementById("input").value;
+            let outputText = '';
+            
+            switch(currentOperation) {
+                case 'uppercase':
+                    outputText = inputText.toUpperCase();
+                    break;
+                case 'lowercase':
+                    outputText = inputText.toLowerCase();
+                    break;
+                case 'capitalize':
+                    outputText = inputText.split(' ')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                        .join(' ');
+                    break;
+                default:
+                    outputText = inputText.toUpperCase();
+            }
+            
+            document.getElementById("output").value = outputText;
+        }
+        
+        // Copy to clipboard functionality
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const outputField = document.getElementById('output');
+            
+            // Check if there's text to copy
+            if (!outputField.value) return;
+            
+            // Select the text
+            outputField.disabled = false;
+            outputField.select();
+            
+            // Copy to clipboard
+            document.execCommand('copy');
+            
+            // Deselect the text
+            outputField.disabled = true;
+            window.getSelection().removeAllRanges();
+            
+            // Show tooltip
+            const tooltip = document.getElementById('copyTooltip');
+            tooltip.classList.add('show');
+            
+            // Hide tooltip after 2 seconds
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        });
+        
+        // Initialize
+        window.onload = function() {
+            // Focus on input field when page loads
+            document.getElementById('input').focus();
+        };
+    </script>
+</body>
+</html>

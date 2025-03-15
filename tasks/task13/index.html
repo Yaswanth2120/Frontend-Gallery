@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreativeSites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        a {
+            text-decoration: none;
+            color: #ccc;
+            transition: all 0.3s;
+        }
+        a:hover {
+            color: #fff;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: #111;
+            padding: 15px 30px;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .site-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .btn {
+            padding: 10px 18px;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 50px auto;
+            gap: 50px;
+            padding: 0 20px;
+        }
+        
+        /* Thumbnails */
+        .thumbnails-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+        .project-thumbnail {
+            aspect-ratio: 1;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+        .project-thumbnail:hover {
+            transform: translateY(-5px);
+        }
+        .thumbnail-1 { background-color: #4caf50; }
+        .thumbnail-2 { background-color: #ff9800; }
+        .thumbnail-3 { background-color: #9c27b0; }
+        .thumbnail-4 { background-color: #2196f3; }
+        .thumbnail-5 { background-color: #f44336; }
+        .thumbnail-6 { background-color: #00bcd4; }
+        
+        /* Content Section */
+        .content-section {
+            max-width: 500px;
+            text-align: right;
+        }
+        .content-section h2 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .content-section h3 {
+            font-size: 24px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .content-section p {
+            line-height: 1.6;
+            color: #bbb;
+            margin-bottom: 30px;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        /* Bento Grid */
+        .bento-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        .bento-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .bento-item {
+            background-color: #222;
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+        .bento-item:hover {
+            transform: translateY(-5px);
+        }
+        .bento-item-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .bento-item-description {
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+        .bento-item-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .bento-item-gradient-1 { background: linear-gradient(135deg, #4361ee, #3a0ca3); }
+        .bento-item-gradient-2 { background: linear-gradient(135deg, #f72585, #7209b7); }
+        
+        /* Footer */
+        footer {
+            background-color: #111;
+            padding: 20px 40px;
+            border-top: 1px solid #333;
+        }
+        .footer-content {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .container {
+                flex-direction: column;
+            }
+            .content-section {
+                text-align: center;
+                max-width: 100%;
+            }
+            .buttons {
+                justify-content: center;
+            }
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+            .mobile-menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+            nav {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 20px 0;
+                margin-top: 20px;
+            }
+            nav.active {
+                display: flex;
+            }
+            nav a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+                border-bottom: 1px solid #333;
+            }
+            .thumbnails-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .bento-grid, .thumbnails-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="brand_logo.png" alt="Logo" class="logo">
+                <span class="site-name">CreativeSites</span>
+            </div>
+            <button class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <a href="#">Services</a>
+                <a href="#">Designs</a>
+                <a href="#">Pricing</a>
+                <a href="#" class="btn">About</a>
+                <a href="#" class="btn">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="thumbnails-section">
+                <div class="project-thumbnail thumbnail-1">Calculator<br> with JS</div>
+                <div class="project-thumbnail thumbnail-3">Call Stack<br> with Array</div>
+                <div class="project-thumbnail thumbnail-5">Pattern<br> & Loop</div>
+                <div class="project-thumbnail thumbnail-2">Student<br>Management</div>
+                <div class="project-thumbnail thumbnail-4">Age<br>Calculator</div>
+                <div class="project-thumbnail thumbnail-6">Bootstrap<br>Form</div>
+            </section>
+
+            <section class="content-section">
+                <h2>Responsive Sites</h2>
+                <h3>With the best quality and pricing</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.
+                </p>
+                <div class="buttons">
+                    <a href="#" class="btn">Learn More</a>
+                    <a href="#" class="btn">Trial</a>
+                </div>
+            </section>
+        </div>
+
+        <section class="bento-section">
+            <div class="bento-header">
+                <h2>Explore Our Services</h2>
+                <p>Discover how our solutions can transform your digital presence</p>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="bento-item bento-item-gradient-1">
+                    <div class="bento-item-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="bento-item-title">Web Development</h3>
+                    <p class="bento-item-description">
+                        Custom websites built with the latest technologies to deliver exceptional user experiences.
+                    </p>
+                </div>
+                
+                <div class="bento-item bento-item-gradient-2">
+                    <div class="bento-item-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="bento-item-title">Mobile-First Design</h3>
+                    <p class="bento-item-description">
+                        Optimized for all devices with a focus on mobile experiences that convert.
+                    </p>
+                </div>
+                
+                <div class="bento-item">
+                    <div class="bento-item-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="bento-item-title">UI/UX Design</h3>
+                    <p class="bento-item-description">
+                        Beautiful interfaces that engage users and enhance brand perception.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="#" class="social-link">
+                <i class="fa-brands fa-facebook"></i>
+                <span>Facebook</span>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fa-brands fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fa-brands fa-linkedin"></i>
+                <span>LinkedIn</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const nav = document.querySelector('nav');
+
+        if (mobileMenuToggle && nav) {
+            mobileMenuToggle.addEventListener('click', () => {
+                nav.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Lab</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --primary: #0071e3;
+            --text: #1d1d1f;
+            --text-light: #6c757d;
+            --border: #dee2e6;
+            --border-light: #f2f2f2;
+            --accent: #0071e3;
+            --section-spacing: 100px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--surface);
+            color: var(--text);
+            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+        
+        .text-accent {
+            color: var(--accent);
+        }
+        
+        /* Header */
+        .header {
+            padding: 120px 0 80px;
+            text-align: center;
+            background-color: var(--bg);
+            margin-bottom: var(--section-spacing);
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: var(--section-spacing);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        /* Two-column layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .col {
+            padding: 0 15px;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        /* Feature cards */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .feature {
+            flex: 0 0 33.333333%;
+            padding: 0 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Steps */
+        .steps {
+            counter-reset: step;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 36px;
+            height: 36px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-description {
+            color: var(--text-light);
+        }
+        
+        /* Technologies */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+        
+        .tech {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: var(--bg);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .tech-icon {
+            margin-right: 8px;
+        }
+        
+        /* Divider */
+        .divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 4rem 0;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: var(--bg);
+            color: var(--text-light);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            :root {
+                --section-spacing: 80px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2.25rem;
+            }
+            
+            .header {
+                padding: 100px 0 60px;
+            }
+            
+            .feature {
+                flex: 0 0 50%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --section-spacing: 60px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .row {
+                flex-direction: column;
+            }
+            
+            .col {
+                margin-bottom: 2rem;
+            }
+            
+            .col:last-child {
+                margin-bottom: 0;
+            }
+            
+            .feature {
+                flex: 0 0 100%;
+            }
+            
+            .header {
+                padding: 80px 0 50px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            :root {
+                --section-spacing: 50px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            .lead {
+                font-size: 1.1rem;
+            }
+            
+            .header {
+                padding: 60px 0 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>Frontend Lab</h1>
+                <p class="lead">Explore modern web development through hands-on interactive exercises designed to build real-world skills</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Introduction Section -->
+            <section class="section">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="section-title">Welcome to the Frontend Lab</h2>
+                        <p>The Frontend Lab is a collection of interactive web development exercises designed to help you master essential skills of modern frontend development. Each exercise focuses on a specific concept, allowing you to build your skills incrementally.</p>
+                        <p>Rather than just reading about concepts, you'll implement them directly in working examples. This approach helps solidify your understanding and builds muscle memory for the skills you'll use daily as a web developer.</p>
+                    </div>
+                    <div class="col">
+                        <div class="features">
+                            <div class="feature">
+                                <div class="feature-icon">🎨</div>
+                                <h3 class="feature-title">Interactive Learning</h3>
+                                <p class="feature-description">Learn by doing with hands-on exercises that reinforce key concepts</p>
+                            </div>
+                            
+                            <div class="feature">
+                                <div class="feature-icon">🧩</div>
+                                <h3 class="feature-title">Progressive Difficulty</h3>
+                                <p class="feature-description">Start with basics and gradually tackle more complex challenges</p>
+                            </div>
+                            
+                            <div class="feature">
+                                <div class="feature-icon">🚀</div>
+                                <h3 class="feature-title">Real-world Applications</h3>
+                                <p class="feature-description">Build practical components and tools you can use in your projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="divider"></div>
+            
+            <!-- Learning Path Section -->
+            <section class="section">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="section-title">Getting Started</h2>
+                        <p>Follow these simple steps to begin your learning journey in the Frontend Lab:</p>
+                        
+                        <div class="steps">
+                            <div class="step">
+                                <h3 class="step-title">Choose a Task</h3>
+                                <p class="step-description">Select an exercise from the sidebar menu that matches your current skill level or learning goals</p>
+                            </div>
+                            
+                            <div class="step">
+                                <h3 class="step-title">Read Instructions</h3>
+                                <p class="step-description">Understand the concepts and requirements before diving into the code</p>
+                            </div>
+                            
+                            <div class="step">
+                                <h3 class="step-title">Experiment</h3>
+                                <p class="step-description">Try different approaches and learn by doing, making mistakes, and solving problems</p>
+                            </div>
+                            
+                            <div class="step">
+                                <h3 class="step-title">Progress</h3>
+                                <p class="step-description">Move to more advanced exercises as you learn and build your confidence</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h2 class="section-title">What You'll Learn</h2>
+                        <h3>HTML (Structure)</h3>
+                        <p>Create well-structured, semantic markup that forms the foundation of web pages. Understand how to organize content effectively for both users and search engines.</p>
+                        
+                        <h3>CSS (Presentation)</h3>
+                        <p>Transform plain HTML into visually appealing designs that work across all devices. Master layouts, animations, and responsive design techniques.</p>
+                        
+                        <h3>JavaScript (Behavior)</h3>
+                        <p>Add interactivity to web pages, manipulate the DOM, handle user events, and create dynamic content that responds to user input.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="divider"></div>
+            
+            <!-- Technologies Section -->
+            <section class="section">
+                <h2 class="section-title">Technologies</h2>
+                <p>The Frontend Lab covers core web technologies and popular frameworks that power modern websites and applications. You'll gain hands-on experience with the tools professionals use every day.</p>
+                
+                <div class="tech-stack">
+                    <div class="tech"><span class="tech-icon">📄</span> HTML5</div>
+                    <div class="tech"><span class="tech-icon">🎨</span> CSS3</div>
+                    <div class="tech"><span class="tech-icon">⚙️</span> JavaScript</div>
+                    <div class="tech"><span class="tech-icon">📱</span> Responsive Design</div>
+                    <div class="tech"><span class="tech-icon">🔄</span> DOM</div>
+                    <div class="tech"><span class="tech-icon">🅱️</span> Bootstrap</div>
+                    <div class="tech"><span class="tech-icon">🌊</span> Tailwind</div>
+                    <div class="tech"><span class="tech-icon">⚛️</span> React</div>
+                </div>
+            </section>
+            
+            <div class="divider"></div>
+            
+            <!-- Learning Approach Section -->
+            <section class="section">
+                <h2 class="section-title">The Learning Approach</h2>
+                <p>The Frontend Lab follows a practical, hands-on approach to learning web development. Rather than just reading about concepts, you'll implement them directly in working examples. This approach helps solidify your understanding and builds muscle memory for the skills you'll use daily as a web developer.</p>
+                <p>Each exercise is designed to focus on a specific concept while building on previous knowledge. This incremental approach allows you to see how different technologies work together to create complete web experiences.</p>
+                <p>Select an exercise from the sidebar to begin your journey into frontend development.</p>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Frontend Lab &copy; 2025 • Created by Yaswanth Sai</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Age Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --background: #f7f8fa;
+            --text: #1d1d1f;
+            --card-bg: #ffffff;
+            --primary: #ff6b6b;
+            --primary-light: rgba(255, 107, 107, 0.1);
+            --primary-dark: #e05151;
+            --border: #e0e0e5;
+            --text-secondary: #6e6e73;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .calculator-container {
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .right-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+
+        .panel-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .right-panel h2 {
+            color: white;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .right-panel .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--card-bg);
+            color: var(--text);
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result-container {
+            margin-top: 20px;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.15); 
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .age-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .age-unit {
+            flex: 1;
+            text-align: center;
+        }
+
+        .age-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .age-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .calculator-container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+
+            .left-panel, .right-panel {
+                padding: 30px;
+            }
+
+            .age-value {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .left-panel, .right-panel {
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .age-display {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .age-unit {
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <!-- Input Panel -->
+        <div class="left-panel">
+            <h2>Smart Age Calculator</h2>
+            <p class="subtitle">Calculate your exact age down to the day</p>
+            
+            <div class="input-group">
+                <label for="dob">Your Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+            
+            <button onclick="calculateAge()">Calculate My Age</button>
+        </div>
+        
+        <!-- Result Panel -->
+        <div class="right-panel">
+            <div class="panel-content">
+                <h2>Your Age Results</h2>
+                <p class="subtitle">See your precise age breakdown</p>
+                
+                <div class="result-container">
+                    <div class="result-card" id="resultCard">
+                        <div class="age-display" id="ageDisplay">
+                            <div class="age-unit">
+                                <div class="age-value" id="years">-</div>
+                                <div class="age-label">Years</div>
+                            </div>
+                            <div class="age-unit">
+                                <div class="age-value" id="months">-</div>
+                                <div class="age-label">Months</div>
+                            </div>
+                            <div class="age-unit">
+                                <div class="age-value" id="days">-</div>
+                                <div class="age-label">Days</div>
+                            </div>
+                        </div>
+                        <p class="message" id="message">Enter your birth date to see your age</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            let dobInput = document.getElementById("dob").value;
+            let yearsElement = document.getElementById("years");
+            let monthsElement = document.getElementById("months");
+            let daysElement = document.getElementById("days");
+            let messageElement = document.getElementById("message");
+            let resultCard = document.getElementById("resultCard");
+
+            if (!dobInput) {
+                yearsElement.textContent = "-";
+                monthsElement.textContent = "-";
+                daysElement.textContent = "-";
+                messageElement.textContent = "⚠️ Please select a valid date!";
+                resultCard.style.background = "rgba(255, 100, 100, 0.3)";
+                return;
+            }
+
+            let dob = new Date(dobInput);
+            let today = new Date();
+
+            // Check if date is in the future
+            if (dob > today) {
+                yearsElement.textContent = "-";
+                monthsElement.textContent = "-";
+                daysElement.textContent = "-";
+                messageElement.textContent = "⚠️ Birth date cannot be in the future!";
+                resultCard.style.background = "rgba(255, 100, 100, 0.3)";
+                return;
+            }
+
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                // Get the number of days in the previous month
+                let lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Animate the numbers
+            animateNumber(yearsElement, years);
+            animateNumber(monthsElement, months);
+            animateNumber(daysElement, days);
+            
+            // Update message based on age
+            let message = "";
+            if (years < 18) {
+                message = "You're still young! Enjoy your youth! 🌟";
+            } else if (years < 30) {
+                message = "The prime of your life! Make it count! 🚀";
+            } else if (years < 50) {
+                message = "Wisdom comes with age! You're doing great! 🌈";
+            } else {
+                message = "Age is just a number! Keep shining! ✨";
+            }
+            
+            messageElement.textContent = message;
+            resultCard.style.background = "rgba(255, 255, 255, 0.15)";
+        }
+
+        // Function to animate counting up to a number
+        function animateNumber(element, target) {
+            let start = 0;
+            let duration = 1000; // 1 second
+            let startTime = null;
+            
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = timestamp - startTime;
+                let percentage = Math.min(progress / duration, 1);
+                
+                let value = Math.floor(percentage * target);
+                element.textContent = value;
+                
+                if (percentage < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            
+            window.requestAnimationFrame(step);
+        }
+    </script>
+</body>
+</html>

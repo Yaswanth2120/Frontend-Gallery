@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Function Tools</title>
+    <style>
+        :root {
+            --bg: #f5f7fa;
+            --surface: #ffffff;
+            --primary: #0071e3;
+            --secondary: #34c759;
+            --text: #1d1d1f;
+            --text-light: #86868b;
+            --border: #e6e6e6;
+            --radius: 12px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --colors: #ff3b30, #0071e3, #34c759, #ff9500;
+        }
+        * {margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, system-ui, sans-serif;}
+        body {
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+        .section {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .section-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        h2 {
+            color: var(--text);
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        .section-content {padding: 20px;}
+        .input-group {margin-bottom: 16px;}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0,113,227,0.2);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            color: white;
+        }
+        .generate-btn {background: var(--primary);}
+        .generate-btn:hover {background: #0062c3;}
+        .calculate-btn {background: var(--secondary);}
+        .calculate-btn:hover {background: #2db84d;}
+        
+        /* Output Box - Fixed Height & Scrollable */
+        .output {
+            margin-top: 20px;
+            padding: 16px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            min-height: 120px;
+            max-height: 250px; /* Prevents right side expansion */
+            overflow-y: auto; /* Only output box scrolls */
+        }
+
+        #demo_div {
+            font-family: monospace;
+            white-space: pre-wrap;
+            text-align: left;
+            line-height: 1.2;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        #result {
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .colors {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+        .color-dot.active {opacity: 1; transform: scale(1.2);}
+        .color-0 {background: #ff3b30;}
+        .color-1 {background: #0071e3;}
+        .color-2 {background: #34c759;}
+        .color-3 {background: #ff9500;}
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Star Pattern Generator -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Star Pattern Generator</h2>
+                <div class="subtitle">Generate a triangle pattern of stars</div>
+            </div>
+            <div class="section-content">
+                <div class="input-group">
+                    <label for="numInput">Enter number of rows</label>
+                    <input id="numInput" type="number" min="1" max="20" placeholder="Enter a number" oninput="starPattern()">
+                </div>
+                <button class="generate-btn" onclick="starPattern()">Generate Pattern</button>
+                <div id="demo_div" class="output"></div>
+                <div class="colors" id="colorDots"></div>
+            </div>
+        </div>
+
+        <!-- Sum Calculator -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Sum Calculator</h2>
+                <div class="subtitle">Calculate sum of numbers in a range</div>
+            </div>
+            <div class="section-content">
+                <div class="input-group">
+                    <label for="numA">Start number</label>
+                    <input type="number" id="numA" placeholder="Enter first number">
+                </div>
+                <div class="input-group">
+                    <label for="numB">End number</label>
+                    <input type="number" id="numB" placeholder="Enter last number">
+                </div>
+                <button class="calculate-btn" onclick="calculateSum()">Calculate Sum</button>
+                <div id="result" class="output">Enter numbers to calculate</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const colors = ["#ff3b30", "#0071e3", "#34c759", "#ff9500"];
+        let idx = 0;
+        
+        function starPattern() {
+            let n = parseInt(document.getElementById("numInput").value);
+            let text = "";
+            
+            if (isNaN(n) || n <= 0 || n > 20) {
+                document.getElementById("demo_div").innerHTML = "Enter a valid number (1-20)";
+                return;
+            }
+            
+            for (let i = 0; i < n; i++) {
+                text += "* ".repeat(i+1) + "\n";
+            }
+
+            document.getElementById("demo_div").innerHTML = text;
+            document.getElementById("demo_div").style.color = colors[idx];
+            idx = (idx + 1) % colors.length;
+        }
+
+        function calculateSum() {
+            let a = parseInt(document.getElementById("numA").value);
+            let b = parseInt(document.getElementById("numB").value);
+            if (isNaN(a) || isNaN(b)) return;
+            let sum = ((b - a + 1) * (a + b)) / 2;
+            document.getElementById("result").innerHTML = `Sum from ${a} to ${b}: ${sum}`;
+        }
+    </script>
+</body>
+</html>
